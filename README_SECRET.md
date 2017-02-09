@@ -1,9 +1,3 @@
 **Don't tweet about this please!**
 
-```
-git clone https://github.com/chenglou/rehydrate-example.git
-npm install
-npm start
-# in another tab
-npm run build
-```
+This project is highly experimental and we want to make sure it's polished before a public release.

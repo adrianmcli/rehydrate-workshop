@@ -2,18 +2,18 @@ module Page = {
   module Counter = {
     include ReactRe.Component.Stateful;
     let name = "Counter";
-    type state = {count: int, input: string};
+    type state = {count: int};
     type props = unit;
-    let getInitialState props => {count: 0, input: ""};
+    let getInitialState props => {count: 0};
     /* increment handler */
     let handleIncrement {state, updater} event => {
       Js.log "clicked increment!";
-      Some {...state, count: state.count + 1}
+      Some {count: state.count + 1}
     };
     /* decrement handler */
     let handleDecrement {state, updater} event => {
       Js.log "clicked decrement!";
-      Some {...state, count: state.count - 1}
+      Some {count: state.count - 1}
     };
     let render {props, state, updater} =>
       <div>

@@ -6,6 +6,7 @@ module.exports = {
     counter: './lib/js/src/counter.js',
     input: './lib/js/src/input.js',
     input2: './lib/js/src/input2.js',
+    groupcounter: './lib/js/src/groupcounter.js',
   },
   output: {
     path: path.join(__dirname, "output"),

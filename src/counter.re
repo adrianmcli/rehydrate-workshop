@@ -6,12 +6,12 @@ module Page = {
     type props = unit;
     let getInitialState props => {count: 0};
     /* increment handler */
-    let handleIncrement {state, updater} event => {
+    let handleIncrement {state} event => {
       Js.log "clicked increment!";
       Some {count: state.count + 1}
     };
     /* decrement handler */
-    let handleDecrement {state, updater} event => {
+    let handleDecrement {state} event => {
       Js.log "clicked decrement!";
       Some {count: state.count - 1}
     };

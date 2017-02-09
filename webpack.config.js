@@ -5,7 +5,7 @@ module.exports = {
     simple: './lib/js/src/simple.js',
     counter: './lib/js/src/counter.js',
     input: './lib/js/src/input.js',
-    advanced: './lib/js/src/advanced.js',
+    input2: './lib/js/src/input2.js',
   },
   output: {
     path: path.join(__dirname, "output"),

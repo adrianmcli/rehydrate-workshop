@@ -1,18 +1,22 @@
+module MessageAdapter = {
+  let submitMessage message => Js.log message;
+};
+
 module Page = {
-  module Advanced = {
+  module Input2 = {
     include ReactRe.Component.Stateful;
-    let name = "Advanced";
+    include MessageAdapter;
+    let name = "Input2";
     type state = {input: string};
     type props = unit;
-    let getInitialState props => {input: "Please type something."};
-    let submitMessage message => Js.log message;
+    let getInitialState props => {input: ""};
     let handleInputChange {state} event => Some {input: ReasonJs.Document.value event##target};
     let handleKeyDown {state, updater} event => {
-      let clearInput = updater (fun {state} e => Some {input: ""}) ();
+      let clearInput = updater (fun {state} e => Some {input: ""});
       switch event##keyCode {
       | 13 =>
         submitMessage state.input;
-        clearInput
+        clearInput ()
       | _ => ()
       };
       None
@@ -27,7 +31,7 @@ module Page = {
         <h1> (ReactRe.stringToElement state.input) </h1>
       </div>;
   };
-  include ReactRe.CreateComponent Advanced;
+  include ReactRe.CreateComponent Input2;
   let createElement = wrapProps ();
 };
 

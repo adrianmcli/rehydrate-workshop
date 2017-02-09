@@ -1,1 +1,4 @@
+.merlin
 node_modules
+lib
+output/**/*.js

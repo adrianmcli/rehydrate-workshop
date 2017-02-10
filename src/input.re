@@ -4,9 +4,12 @@ module Input = {
   type state = {display: string};
   type props = unit;
   let getInitialState props => {display: "Please type something."};
-  /* input handler */
+
+  /** input handler */
   let handleInputChange {state} event => {
     let inputStr = ReasonJs.Document.value event##target;
+
+    /** pattern matching example */
     let displayStr =
       switch inputStr {
       | "" => "Please type something."
@@ -15,6 +18,8 @@ module Input = {
       };
     Some {display: displayStr}
   };
+
+  /** render */
   let render {state, updater} =>
     <div>
       <input onChange=(updater handleInputChange) />

@@ -1,5 +1,8 @@
 module MessageAdapter = {
-  let submitMessage message => Js.log message;
+  let submitMessage message => {
+    Js.log message;
+    let _ = ReasonJs.fetch ("https://rehydrate-workshop-board-server-vfxanxldvd.now.sh/message/" ^ message);
+  };
 };
 
 module Input2 = {

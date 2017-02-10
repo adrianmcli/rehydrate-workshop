@@ -10,56 +10,57 @@ module CounterAPI = {
   let decrementCount = fetchAndUpdate "decrement";
 };
 
-module Page = {
-  module GroupCounter = {
-    include ReactRe.Component.Stateful.InstanceVars;
-    let name = "GroupCounter";
-    type props = unit;
+module GroupCounter = {
+  include ReactRe.Component.Stateful.InstanceVars;
+  let name = "GroupCounter";
+  type props = unit;
 
-    /** state */
-    type state = {count: int};
-    let getInitialState props => {count: 0};
+  /** state */
+  type state = {count: int};
+  let getInitialState props => {count: 0};
 
-    /** instanceVars */
-    type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
-    let getInstanceVars () => {intervalID: None};
+  /** instanceVars */
+  type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
+  let getInstanceVars () => {intervalID: None};
 
-    /** count updater callback */
-    let countUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
+  /** count updater callback */
+  let countUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
 
-    /** lifecycle methods */
-    let componentDidMount {instanceVars, updater} => {
-      let intervalID =
-        ReasonJs.setInterval (fun () => CounterAPI.getCount (countUpdater updater)) 500;
-      instanceVars.intervalID = Some intervalID;
-      None
-    };
-    let componentWillUnmount {instanceVars} =>
-      switch instanceVars.intervalID {
-      | None => ()
-      | Some id => ReasonJs.clearInterval id
-      };
-
-    /** event handlers */
-    let handleIncrement {updater} event => {
-      CounterAPI.incrementCount (countUpdater updater);
-      None
-    };
-    let handleDecrement {updater} event => {
-      CounterAPI.decrementCount (countUpdater updater);
-      None
-    };
-
-    /** render */
-    let render {state, updater} =>
-      <div>
-        <h1> (ReactRe.stringToElement (string_of_int state.count)) </h1>
-        <button onClick=(updater handleIncrement)> (ReactRe.stringToElement "Increment") </button>
-        <button onClick=(updater handleDecrement)> (ReactRe.stringToElement "Decrement") </button>
-      </div>;
+  /** lifecycle methods */
+  let componentDidMount {instanceVars, updater} => {
+    let intervalID =
+      ReasonJs.setInterval (fun () => CounterAPI.getCount (countUpdater updater)) 500;
+    instanceVars.intervalID = Some intervalID;
+    None
   };
-  include ReactRe.CreateComponent GroupCounter;
-  let createElement = wrapProps ();
+  let componentWillUnmount {instanceVars} =>
+    switch instanceVars.intervalID {
+    | None => ()
+    | Some id => ReasonJs.clearInterval id
+    };
+
+  /** event handlers */
+  let handleIncrement {updater} event => {
+    CounterAPI.incrementCount (countUpdater updater);
+    None
+  };
+  let handleDecrement {updater} event => {
+    CounterAPI.decrementCount (countUpdater updater);
+    None
+  };
+
+  /** render */
+  let render {state, updater} =>
+    <div>
+      <h1> (ReactRe.stringToElement (string_of_int state.count)) </h1>
+      <button onClick=(updater handleIncrement)> (ReactRe.stringToElement "Increment") </button>
+      <button onClick=(updater handleDecrement)> (ReactRe.stringToElement "Decrement") </button>
+    </div>;
 };
 
-let () = ReactDOMRe.render <Page /> (ReasonJs.Document.getElementById "index");
+include ReactRe.CreateComponent GroupCounter;
+
+let createElement = wrapProps ();
+
+let () =
+  ReactDOMRe.render (createElement children::[] ()) (ReasonJs.Document.getElementById "index");

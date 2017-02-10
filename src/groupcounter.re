@@ -13,7 +13,6 @@ module CounterAPI = {
 module Page = {
   module GroupCounter = {
     include ReactRe.Component.Stateful.InstanceVars;
-    include CounterAPI;
     let name = "GroupCounter";
     type props = unit;
 
@@ -30,7 +29,8 @@ module Page = {
 
     /* lifecycle methods */
     let componentDidMount {instanceVars, updater} => {
-      let intervalID = ReasonJs.setInterval (fun () => getCount (countUpdater updater)) 500;
+      let intervalID =
+        ReasonJs.setInterval (fun () => CounterAPI.getCount (countUpdater updater)) 500;
       instanceVars.intervalID = Some intervalID;
       None
     };
@@ -42,11 +42,11 @@ module Page = {
 
     /* event handlers */
     let handleIncrement {updater} event => {
-      incrementCount (countUpdater updater);
+      CounterAPI.incrementCount (countUpdater updater);
       None
     };
     let handleDecrement {updater} event => {
-      decrementCount (countUpdater updater);
+      CounterAPI.decrementCount (countUpdater updater);
       None
     };
 

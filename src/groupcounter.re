@@ -1,8 +1,8 @@
 module CounterAPI = {
   let then_ a b => ReasonJs.Promise.thenDo b a;
-  let fetchAndUpdate action updateState => {
+  let fetchAndUpdate action setState => {
     let p = ReasonJs.fetch ("https://rehydrate-workshop-server-coescnwddb.now.sh/" ^ action);
-    let _ = p |> then_ ReasonJs.Response.text |> then_ updateState;
+    let _ = p |> then_ ReasonJs.Response.text |> then_ setState;
     ()
   };
   let getCount = fetchAndUpdate "count";
@@ -23,13 +23,13 @@ module GroupCounter = {
   type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
   let getInstanceVars () => {intervalID: None};
 
-  /** count updater callback */
-  let countUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
+  /** count setting callback */
+  let countSetter setState str => setState (fun _ => {count: int_of_string str});
 
   /** lifecycle methods */
-  let componentDidMount {instanceVars, updater} => {
+  let componentDidMount {instanceVars, setState} => {
     let intervalID =
-      ReasonJs.setInterval (fun () => CounterAPI.getCount (countUpdater updater)) 500;
+      ReasonJs.setInterval (fun () => CounterAPI.getCount (countSetter setState)) 500;
     instanceVars.intervalID = Some intervalID;
     None
   };
@@ -40,12 +40,12 @@ module GroupCounter = {
     };
 
   /** event handlers */
-  let handleIncrement {updater} event => {
-    CounterAPI.incrementCount (countUpdater updater);
+  let handleIncrement {setState} event => {
+    CounterAPI.incrementCount (countSetter setState);
     None
   };
-  let handleDecrement {updater} event => {
-    CounterAPI.decrementCount (countUpdater updater);
+  let handleDecrement {setState} event => {
+    CounterAPI.decrementCount (countSetter setState);
     None
   };
 

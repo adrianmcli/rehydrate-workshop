@@ -1,6 +1,14 @@
 # Rehydrate Workshop
 
-A short demo of basic things you can do with Rehydrate.
+A small collection of basic components built with Rehydrate.
+
+## Includes
+
+* `simple.re` — A simple example of passing a prop down into a stateless component.
+* `counter.re` — An increment/decrement counter that demonstrates use of event handlers.
+* `input.re` — A controlled input with a simple demonstration of pattern matching.
+* `input2.re` — A text input that sends its contents on Enter key down via a GET request.
+* `groupcounter.re` — An increment/decrement counter with long polling, promise handling, and instance variables.
 
 # Installation
 

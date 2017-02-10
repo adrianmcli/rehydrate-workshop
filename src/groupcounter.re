@@ -25,12 +25,12 @@ module Page = {
     type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
     let getInstanceVars () => {intervalID: None};
 
-    /* state updater callback */
-    let stateUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
+    /* count updater callback */
+    let countUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
 
     /* lifecycle methods */
     let componentDidMount {instanceVars, updater} => {
-      let intervalID = ReasonJs.setInterval (fun () => getCount (stateUpdater updater)) 500;
+      let intervalID = ReasonJs.setInterval (fun () => getCount (countUpdater updater)) 500;
       instanceVars.intervalID = Some intervalID;
       None
     };
@@ -42,11 +42,11 @@ module Page = {
 
     /* event handlers */
     let handleIncrement {updater} event => {
-      incrementCount (stateUpdater updater);
+      incrementCount (countUpdater updater);
       None
     };
     let handleDecrement {updater} event => {
-      decrementCount (stateUpdater updater);
+      decrementCount (countUpdater updater);
       None
     };
 

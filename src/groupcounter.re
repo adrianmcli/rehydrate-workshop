@@ -5,33 +5,32 @@ module CounterAPI = {
     let _ = p |> then_ ReasonJs.Response.text |> then_ updateState;
     ()
   };
-  let getCount updateState => {
-    fetchAndUpdate "count" updateState;
-    ()
-  };
-  let incrementCount updateState => {
-    fetchAndUpdate "increment" updateState;
-    ()
-  };
-  let decrementCount updateState => {
-    fetchAndUpdate "decrement" updateState;
-    ()
-  };
+  let getCount = fetchAndUpdate "count";
+  let incrementCount = fetchAndUpdate "increment";
+  let decrementCount = fetchAndUpdate "decrement";
 };
 
 module Page = {
   module GroupCounter = {
-    include ReactRe.Component.Stateful;
+    include ReactRe.Component.Stateful.InstanceVars;
     include CounterAPI;
     let name = "GroupCounter";
-    type state = {count: int};
     type props = unit;
+    type state = {count: int};
     let getInitialState props => {count: 0};
+    type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
+    let getInstanceVars () => {intervalID: None};
     let stateUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
-    let componentDidMount {updater} => {
-      let _ = ReasonJs.setInterval (fun () => getCount (stateUpdater updater)) 500;
+    let componentDidMount {instanceVars, updater} => {
+      let intervalID = ReasonJs.setInterval (fun () => getCount (stateUpdater updater)) 500;
+      instanceVars.intervalID = Some intervalID;
       None
     };
+    let componentWillUnmount {instanceVars} =>
+      switch instanceVars.intervalID {
+      | None => ()
+      | Some id => ReasonJs.clearInterval id
+      };
     let handleIncrement {updater} event => {
       incrementCount (stateUpdater updater);
       None
@@ -40,7 +39,7 @@ module Page = {
       decrementCount (stateUpdater updater);
       None
     };
-    let render {props, state, updater} =>
+    let render {state, updater} =>
       <div>
         <h1> (ReactRe.stringToElement (string_of_int state.count)) </h1>
         <button onClick=(updater handleIncrement)> (ReactRe.stringToElement "Increment") </button>

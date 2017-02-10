@@ -16,11 +16,19 @@ module Page = {
     include CounterAPI;
     let name = "GroupCounter";
     type props = unit;
+
+    /* state */
     type state = {count: int};
     let getInitialState props => {count: 0};
+
+    /* instanceVars */
     type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
     let getInstanceVars () => {intervalID: None};
+
+    /* state updater callback */
     let stateUpdater updater str => updater (fun _ e => Some {count: int_of_string str}) ();
+
+    /* lifecycle methods */
     let componentDidMount {instanceVars, updater} => {
       let intervalID = ReasonJs.setInterval (fun () => getCount (stateUpdater updater)) 500;
       instanceVars.intervalID = Some intervalID;
@@ -31,6 +39,8 @@ module Page = {
       | None => ()
       | Some id => ReasonJs.clearInterval id
       };
+
+    /* event handlers */
     let handleIncrement {updater} event => {
       incrementCount (stateUpdater updater);
       None
@@ -39,6 +49,7 @@ module Page = {
       decrementCount (stateUpdater updater);
       None
     };
+
     let render {state, updater} =>
       <div>
         <h1> (ReactRe.stringToElement (string_of_int state.count)) </h1>

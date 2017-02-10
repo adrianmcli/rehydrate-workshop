@@ -3,10 +3,10 @@ module Input = {
   let name = "Input";
   type state = {display: string};
   type props = unit;
-  let getInitialState props => {display: "Please type something."};
+  let getInitialState _ => {display: "Please type something."};
 
   /** input handler */
-  let handleInputChange {state} event => {
+  let handleInputChange _ event => {
     let inputStr = ReasonJs.Document.value event##target;
 
     /** pattern matching example */

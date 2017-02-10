@@ -17,7 +17,7 @@ module GroupCounter = {
 
   /** state */
   type state = {count: int};
-  let getInitialState props => {count: 0};
+  let getInitialState _ => {count: 0};
 
   /** instanceVars */
   type instanceVars = {mutable intervalID: option ReasonJs.intervalId};
@@ -40,11 +40,11 @@ module GroupCounter = {
     };
 
   /** event handlers */
-  let handleIncrement {setState} event => {
+  let handleIncrement {setState} _ => {
     CounterAPI.incrementCount (countSetter setState);
     None
   };
-  let handleDecrement {setState} event => {
+  let handleDecrement {setState} _ => {
     CounterAPI.decrementCount (countSetter setState);
     None
   };

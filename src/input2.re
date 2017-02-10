@@ -12,14 +12,14 @@ module Input2 = {
   let name = "Input2";
   type state = {input: string};
   type props = unit;
-  let getInitialState props => {input: ""};
+  let getInitialState _ => {input: ""};
 
   /** input change handler */
-  let handleInputChange {state} event => Some {input: ReasonJs.Document.value event##target};
+  let handleInputChange _ event => Some {input: ReasonJs.Document.value event##target};
 
   /** key down handler */
   let handleKeyDown {state, updater} event => {
-    let clearInput = updater (fun {state} e => Some {input: ""});
+    let clearInput = updater (fun _ _ => Some {input: ""});
     switch event##keyCode {
     /* pattern match for enter key */
     | 13 =>

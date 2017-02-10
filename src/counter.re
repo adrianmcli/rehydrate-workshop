@@ -3,22 +3,22 @@ module Counter = {
   let name = "Counter";
   type state = {count: int};
   type props = unit;
-  let getInitialState props => {count: 0};
+  let getInitialState _ => {count: 0};
 
   /** increment handler */
-  let handleIncrement {state} event => {
+  let handleIncrement {state} _ => {
     Js.log "clicked increment!";
     Some {count: state.count + 1}
   };
 
   /** decrement handler */
-  let handleDecrement {state} event => {
+  let handleDecrement {state} _ => {
     Js.log "clicked decrement!";
     Some {count: state.count - 1}
   };
 
   /** render */
-  let render {props, state, updater} =>
+  let render {state, updater} =>
     <div>
       <h1> (ReactRe.stringToElement (string_of_int state.count)) </h1>
       <button onClick=(updater handleIncrement)> (ReactRe.stringToElement "Increment") </button>

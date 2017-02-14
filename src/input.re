@@ -10,13 +10,8 @@ module Input = {
     let inputStr = ReasonJs.Document.value event##target;
 
     /** pattern matching example */
-    /* let displayStr =
-       switch inputStr {
-       | "" => "Please type something."
-       | " " => "A space is not something!"
-       | _ => "input: " ^ inputStr
-       }; */
-    Some {display: displayStr}
+    /* TODO - use pattern matching to generate a string depending on the input */
+    Some {display: "replace this with an intelligent string"}
   };
 
   /** render */

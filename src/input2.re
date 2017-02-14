@@ -1,10 +1,10 @@
-module MessageAdapter = {
+/* module MessageAdapter = {
   let submitMessage message => {
     let baseUrl = "https://rehydrate-workshop-board-server-vfxanxldvd.now.sh/message/";
     let _ = ReasonJs.fetch (baseUrl ^ message);
     ()
   };
-};
+}; */
 
 module Input2 = {
   include ReactRe.Component.Stateful;
@@ -15,18 +15,18 @@ module Input2 = {
   let getInitialState _ => {input: ""};
 
   /** input change handler */
-  let handleInputChange _ event => Some {input: ReasonJs.Document.value event##target};
+  /* let handleInputChange _ event => Some {input: ReasonJs.Document.value event##target}; */
 
   /** key down handler */
   let handleKeyDown {state, updater} event => {
     let clearInput = updater (fun _ _ => Some {input: ""});
     switch event##keyCode {
     /* pattern match for enter key */
-    | 13 =>
+    /* | 13 =>
       submitMessage state.input;
       clearInput ()
     | _ => ()
-    };
+    }; */
     None
   };
 

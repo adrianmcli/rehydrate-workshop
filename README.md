@@ -12,6 +12,8 @@ A small collection of basic components built with Rehydrate.
 
 # Installation
 
+**Note:** Do not use Yarn, because it is not yet supported.
+
 Requires the [Ninja](https://ninja-build.org/) build tool.
 
 ```bash

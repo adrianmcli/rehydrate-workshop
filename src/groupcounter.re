@@ -1,13 +1,9 @@
 module CounterAPI = {
-  /* let then_ a b => ReasonJs.Promise.thenDo b a;
-     let fetchAndUpdate action setState => {
-       let p = ReasonJs.fetch ("https://rehydrate-workshop-server-coescnwddb.now.sh/" ^ action);
-       let _ = p |> then_ ReasonJs.Response.text |> then_ setState;
-       ()
-     };
-     let getCount = fetchAndUpdate "count";
-     let incrementCount = fetchAndUpdate "increment";
-     let decrementCount = fetchAndUpdate "decrement"; */
+  /* TODO - write the then_ helper */
+  /* TODO - write the fetch and update function */
+  /* TODO - handle promise result with then_ */
+  /* NOTE - API link: "https://rehydrate-workshop-server-coescnwddb.now.sh/" */
+  /* TODO - write getCount, incrementCount, and decrementCount for consumption */
 };
 
 module GroupCounter = {
@@ -27,25 +23,19 @@ module GroupCounter = {
   let countSetter setState str => setState (fun _ => {count: int_of_string str});
 
   /** lifecycle methods */
-  /* let componentDidMount {instanceVars, setState} => {
-       let intervalID =
-         ReasonJs.setInterval (fun () => CounterAPI.getCount (countSetter setState)) 500;
-       instanceVars.intervalID = Some intervalID;
-       None
-     };
-     let componentWillUnmount {instanceVars} =>
-       switch instanceVars.intervalID {
-       | None => ()
-       | Some id => ReasonJs.clearInterval id
-       }; */
+  /* TODO - begin setInterval when component mounts */
+  /* TODO - take care of tear down logic */
+  /* TODO - call API for each setInterval */
 
   /** event handlers */
   let handleIncrement {setState} _ => {
-    CounterAPI.incrementCount (countSetter setState);
+    /* TODO - call API to increment */
+    Js.log "increment";
     None
   };
   let handleDecrement {setState} _ => {
-    CounterAPI.decrementCount (countSetter setState);
+    /* TODO - call API to decrement */
+    Js.log "decrement";
     None
   };
 
